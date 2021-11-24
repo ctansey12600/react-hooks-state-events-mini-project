@@ -9,7 +9,15 @@ console.log("Tasks:", {TASKS})
 
 function App() {
   const [tasks, setTasks] = useState(TASKS)
-  const [filterBy, setFilterBy] = useState("All")
+  const [category, setCategory] = useState("All")
+
+  const displayableTasks = tasks.filter((task) => {
+    if(category === "All"){
+      return true
+    }else {
+      return task.category === category
+    }
+  })
 
   function handleDelete (event) {
     const updatedTasks = tasks.filter((task) => {
@@ -20,7 +28,7 @@ function App() {
   }
 
   function handleFilter (event) {
-    setFilterBy(event.target.value)
+    setCategory(event.target.value)
   }
   
   function onTaskFormSubmit (formData) {
@@ -30,9 +38,9 @@ function App() {
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter filterBy={filterBy} categories={CATEGORIES} handleFilter={handleFilter}/>
+      <CategoryFilter categoryFilter={category} categories={CATEGORIES} handleFilter={handleFilter}/>
       <NewTaskForm onTaskFormSubmit={onTaskFormSubmit} categories={CATEGORIES}/>
-      <TaskList filterBy={filterBy} tasks={tasks} handleDelete={handleDelete}/>
+      <TaskList tasks={displayableTasks} handleDelete={handleDelete}/>
     </div>
   );
 }
