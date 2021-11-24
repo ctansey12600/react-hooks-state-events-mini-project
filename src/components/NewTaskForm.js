@@ -11,6 +11,7 @@ function NewTaskForm( {onTaskFormSubmit, categories}) {
   })
 
   function handleChange(event) {
+    event.preventDefault()
     const name = event.target.name
     let value = event.target.value
     
@@ -21,9 +22,7 @@ function NewTaskForm( {onTaskFormSubmit, categories}) {
   }
 
   return (
-    <form className="new-task-form" onSubmit={(event) => {
-      event.preventDefault()
-      onTaskFormSubmit(formData)}}>
+    <form className="new-task-form" onSubmit={(event) => onTaskFormSubmit(formData)}>
       <label>
         Details
         <input type="text" name="text" value={formData.text} onChange={handleChange}/>
